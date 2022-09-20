@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
     <title>Challenge - DOM</title>
   </head>
   <body>
@@ -36,14 +37,33 @@
       // Fungsi yang digunakan untuk menambahkan tulisan
       // Jangan ubah cara deklarasi fungsinya, cukup isi saja
       function fnClickHandler(toDoItem) {
+     
         let li = document.createElement('li');
-        li.textContent = toDoItem;
+        let div = document.createElement('div')
+        const inputGroup = li.appendChild(div);
+        inputGroup.className = 'inputGroup';
+
+        let index = document.querySelectorAll('#todo-output', li)[0].children.length;
+        let optionForAndId = `option${index + 1}`
+
+        let inputElement = document.createElement('input')
+        inputElement.setAttribute("type", "checkbox");
+        inputElement.setAttribute("id", optionForAndId);
+        inputGroup.appendChild(inputElement)
+
+        let label = document.createElement('label');
+        label.setAttribute('for', optionForAndId);
+        label.textContent = toDoItem
+        inputGroup.appendChild(label);
+
+        input.value = '';
         return li;
       }
 
       // TODO: register event onclick / addEventListener untuk button
       button.addEventListener('click', () => {
-        output.append(fnClickHandler(input.value));
+        let nodeResult = fnClickHandler(input.value)
+        output.append(nodeResult);
       })
       // akan menjalankan fungsi fnClickHandler
       
@@ -51,7 +71,8 @@
       input.addEventListener('keypress', function (e) {
         // console.log(e);
         if(e.key === 'Enter') {
-          output.append(fnClickHandler(input.value));
+          let nodeResult = fnClickHandler(input.value)
+          output.append(nodeResult);
         }
       })
       // sehingga saat di input ditekan enter akan menjalankan fungsi fnClickHandler juga
